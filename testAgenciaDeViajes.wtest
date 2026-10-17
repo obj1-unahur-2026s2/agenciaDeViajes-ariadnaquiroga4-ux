@@ -1,0 +1,27 @@
+import agenciaDeViajes.*
+
+describe "test parte 1" {
+  var coordinador1 = new Guia(cantViajesRealizados = 21, estaMotivado = true, añosDeExperiencia = 5, rol = Guia)
+  var coordinador2 = new AsistenteLogistico(cantViajesRealizados = 15, estaMotivado = true, añosDeExperiencia = 2, rol = AsistenteLogistico)
+  var coordinador3 = new Acompañante(cantViajesRealizados = 21, estaMotivado = true, añosDeExperiencia = 3, rol = Acompañante)
+
+  var pack1 = new Nacionales(duracion = 7, precioBase = 500000, coordinadorACargo = coordinador1, beneficiosEspeciales = [],provinciaDestino = "Cordoba", listaActividades = [])
+  var packInternacional = new Internacionales(duracion = 7, precioBase = 500000, coordinadorACargo = coordinador2, beneficiosEspeciales = ["m", "m"], paisDestinado = "Brasil", cantEscalas = 0, lugarDeInteres = true)
+  var packNacio2 = new Nacionales(duracion = 10, precioBase = 500000, coordinadorACargo = coordinador3, beneficiosEspeciales = [],provinciaDestino = "Cordoba", listaActividades = [])
+  
+  var packProvin = new PackProvinciales(duracion = 10, precioBase = 500000, coordinadorACargo = coordinador3, beneficiosEspeciales = [""],provinciaDestino = "Cordoba", listaActividades = ["", ""], cantCiudadesAVisitar = 6)
+  test "tests pack" {
+    assert.equals(pack1.precioBase(), pack1.valorFinal())
+    assert.equals(packInternacional.precioBase() * 1.20, packInternacional.valorFinal())
+  }
+  test "test coordinador" {
+    assert.that(coordinador1.altamenteCalificado())
+    assert.notThat(coordinador2.altamenteCalificado())
+    assert.that(coordinador3.altamenteCalificado())
+  }
+  test "test premium" {
+    assert.that(packNacio2.premium())
+    assert.notThat(packInternacional.premium())
+    assert.notThat(packProvin.premium())
+  }
+}
